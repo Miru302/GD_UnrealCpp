@@ -4,14 +4,18 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
-#include "MyCharacter.generated.h"
+
+
+#include "MyCharacter.generated.h" /// this should be the last #include
+
+class UPhysicsHandleComponent;
 
 UCLASS()
 class GD_UNREALCPP_API AMyCharacter : public ACharacter
 {
 	GENERATED_BODY()
 
-	float Reach = 3000.f;
+	float Reach;
 public:
 	// Sets default values for this character's properties
 	AMyCharacter();
@@ -20,6 +24,9 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	UPhysicsHandleComponent* MyHandle; ///Creating a pointer to a Handle component.
+
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -27,6 +34,7 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	void Fire();
+	void Grab();
+	FHitResult LineTrace();
 	
 };
