@@ -35,9 +35,10 @@ void AMyCharacter::Tick(float DeltaTime)
 	{
 		FVector StartLocation;
 		FRotator StartRotation;
-		GetWorld()->GetFirstPlayerController()->GetActorEyesViewPoint(StartLocation, StartRotation);	///This function takes parameters in by reference and changes value in them
-		FVector EndLocation = StartLocation + StartRotation.Vector() * 200.f;							/// 
-		MyHandle->SetTargetLocation(EndLocation);
+		GetWorld()->GetFirstPlayerController()->GetActorEyesViewPoint(StartLocation, StartRotation);	
+		FVector EndLocation = StartLocation + StartRotation.Vector() * 200.f;							///Hardcoding distance of the grabbed object from player as 200
+
+		MyHandle->SetTargetLocation(EndLocation);														///Setting target location of the grabbed object
 	}
 	
 }
