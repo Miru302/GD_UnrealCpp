@@ -46,7 +46,13 @@ void AMyOverlapTrigger::Tick(float DeltaTime)
 ///This function is called whenever this actor's collision starts overlapping another actor (according to collision settings)
 void AMyOverlapTrigger::NotifyActorBeginOverlap(AActor * OtherActor)
 {
-	UE_LOG(LogTemp, Warning, TEXT("%s"), *OtherActor->GetName()) 
+	
 	OnTrigger.Broadcast(OtherActor);
 	
+}
+
+void AMyOverlapTrigger::NotifyActorEndOverlap(AActor * OtherActor)
+{
+	UE_LOG(LogTemp, Warning, TEXT("OffTrigger"))
+	OffTrigger.Broadcast();
 }

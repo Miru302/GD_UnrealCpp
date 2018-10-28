@@ -5,6 +5,7 @@
 #include "Components/InputComponent.h"				///UInputComponent->BindAction()
 #include "Engine/World.h"							///GetWorld()
 #include "PhysicsEngine/PhysicsHandleComponent.h"	///For operations with MyHandle (UPhysicsHandleComponent)
+#include "MyInteractTrigger.h"
 
 // Sets default values
 AMyCharacter::AMyCharacter()
@@ -12,7 +13,7 @@ AMyCharacter::AMyCharacter()
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	Reach = 1000.f;
+	
 
 	MyHandle = CreateDefaultSubobject<UPhysicsHandleComponent>("MyHandle"); ///Instantiating our PhysicsHandle component and assigning it to the pointer MyHandle 
 
@@ -64,7 +65,7 @@ void AMyCharacter::Grab()
 
 
 
-	FHitResult HitResult = LineTrace();
+	FHitResult HitResult = LineTrace(ECC_PhysicsBody, 1000.f);
 
 	if (HitResult.GetActor())															///If HitResult have Actor then we proceed
 	{
@@ -79,19 +80,19 @@ void AMyCharacter::Grab()
 	
 }
 
-FHitResult AMyCharacter::LineTrace()
+FHitResult AMyCharacter::LineTrace(ECollisionChannel Channel, float Reach)
 {
 	///Setting up parameters for LineTrace
 	FVector StartLocation;
 	FRotator StartRotation;
 	GetWorld()->GetFirstPlayerController()->GetActorEyesViewPoint(StartLocation, StartRotation);	///This function takes parameters in by reference and changes value in them
 	FVector EndLocation = StartLocation + StartRotation.Vector() * Reach;							///Calculating end location for LineTrace		
-	FCollisionObjectQueryParams CollisionObjParams = { ECollisionChannel::ECC_PhysicsBody };		///Setting what type of objects LineTrace will Hit
+	FCollisionObjectQueryParams CollisionObjParams = { Channel };		///Setting what type of objects LineTrace will Hit
 	FCollisionQueryParams CollisionQueryParams = { FName("GrabTrace"), false, this };				///Setting TraceTag = "FireTrace". Now in PIE console we can...
 	FHitResult HitResult;																			///...use command TraceTag FireTrace to visualize LineTrace
 
 	
-	///DrawDebugLine(GetWorld(), StartLocation, EndLocation, FColor::Red, true, 0.3f, 0, 1.f);			///Another way for visualizing our LineTrace, requires #include "DrawDebugHelpers.h"
+	DrawDebugLine(GetWorld(), StartLocation, EndLocation, FColor::Red, true, 0.3f, 0, 1.f);			///Another way for visualizing our LineTrace, requires #include "DrawDebugHelpers.h"
 	GetWorld()->LineTraceSingleByObjectType(HitResult, StartLocation, EndLocation, CollisionObjParams, CollisionQueryParams);  ///LineTrace
 	return HitResult;
 }
@@ -100,5 +101,11 @@ void AMyCharacter::Use()
 {
 	UE_LOG(LogTemp, Warning, TEXT("Use pressed"));
 	if (!GetWorld()) { return; };
+	FHitResult UseItemHit = LineTrace(ECC_GameTraceChannel2, 500.f);
+	if (UseItemHit.GetActor()) {
+		AMyInteractTrigger* Button = Cast<AMyInteractTrigger>(UseItemHit.GetActor());
+		Button->Used();
+		
+	}
 }
 

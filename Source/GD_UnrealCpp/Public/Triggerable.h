@@ -28,6 +28,9 @@ public:
 
 	UFUNCTION(BlueprintImplementableEvent)
 	void OnTrigger(AActor* TouchedActor);
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void OffTrigger();
 	
 	UPROPERTY(EditAnywhere) 
 	AMyTrigger* Trigger;

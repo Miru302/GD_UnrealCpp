@@ -25,7 +25,7 @@ protected:
 	// Called when the game starts or when spawned 
 	virtual void BeginPlay() override;
 
-
+private:
 	///Creating pointers to components
 	UPROPERTY(EditDefaultsOnly)
 	USceneComponent* SceneComp;
@@ -33,13 +33,15 @@ protected:
 	UPROPERTY(EditDefaultsOnly)
 	UBoxComponent* TriggerVolume;
 
-	UPROPERTY(EditDefaultsOnly)
+	UPROPERTY(Category = Character, VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	UStaticMeshComponent* MyMesh;
 
 
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	void Used();
 
 	
 	

@@ -19,6 +19,7 @@ void ATriggerable::BeginPlay()
 	if(Trigger)
 	{
 		Trigger->OnTrigger.AddDynamic(this, &ATriggerable::OnTrigger);
+		Trigger->OffTrigger.AddDynamic(this, &ATriggerable::OffTrigger);
 	}
 }
 

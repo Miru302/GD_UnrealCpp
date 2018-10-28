@@ -29,7 +29,7 @@ protected:
 	UPROPERTY(EditDefaultsOnly)
 	UBoxComponent* TriggerVolume;
 
-	UPROPERTY(EditDefaultsOnly)
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	UStaticMeshComponent* MyMesh;
 
 
@@ -38,6 +38,9 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	virtual void NotifyActorBeginOverlap(AActor* OtherActor) override;
+
+	virtual void NotifyActorEndOverlap(AActor* OtherActor) override;
+
 
 	
 };

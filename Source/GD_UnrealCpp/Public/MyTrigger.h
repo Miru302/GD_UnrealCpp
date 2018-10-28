@@ -8,9 +8,10 @@
 
 ///Creating "EventDispatcher". OneParam can be changed to TwoParams, ThreeParams and so on. 
 ///Notice how type and name of parameter are separated by a ','
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FActorTriggeredSignature, AActor*, TouchedActor);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FTriggerOnSignature, AActor*, TouchedActor);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FTriggerOffSignature);
 
-UCLASS()
+UCLASS(BlueprintType)
 class GD_UNREALCPP_API AMyTrigger : public AActor
 {
 	GENERATED_BODY()
@@ -27,6 +28,8 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	UPROPERTY(BlueprintAssignable, Category = "EventDispatchers")
-	FActorTriggeredSignature OnTrigger;
+	FTriggerOnSignature OnTrigger;
+	UPROPERTY(BlueprintAssignable, Category = "EventDispatchers")
+	FTriggerOffSignature OffTrigger;
 
 };

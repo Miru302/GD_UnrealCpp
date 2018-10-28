@@ -20,6 +20,7 @@ AMyInteractTrigger::AMyInteractTrigger()
 	TriggerVolume->SetBoxExtent(FVector(100.f));
 	TriggerVolume->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
 	TriggerVolume->SetupAttachment(SceneComp);									///Basically parenting to SceneComponent
+	TriggerVolume->SetCollisionObjectType(ECC_GameTraceChannel2);
 
 	MyMesh = CreateDefaultSubobject<UStaticMeshComponent>("Mesh");
 	MyMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
@@ -39,5 +40,11 @@ void AMyInteractTrigger::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+}
+
+void AMyInteractTrigger::Used()
+{
+	OnTrigger.Broadcast(this);
+	UE_LOG(LogTemp, Warning, TEXT("Using Brodacasting!"));
 }
 

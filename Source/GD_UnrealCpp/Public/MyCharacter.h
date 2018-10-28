@@ -15,7 +15,7 @@ class GD_UNREALCPP_API AMyCharacter : public ACharacter
 {
 	GENERATED_BODY()
 
-	float Reach;
+	
 public:
 	// Sets default values for this character's properties 
 	AMyCharacter();
@@ -35,7 +35,7 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	void Grab();
-	FHitResult LineTrace();
+	FHitResult LineTrace(ECollisionChannel Channel, float Reach);
 	
 	void Use();
 
