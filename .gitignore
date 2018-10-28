@@ -79,3 +79,4 @@ DerivedDataCache/*
 #Content files if we don't need them
 #*.uasset
 #*.umap
+Content/StarterContent/*

@@ -14,7 +14,7 @@ AMyCharacter::AMyCharacter()
 
 	Reach = 1000.f;
 
-	MyHandle = CreateDefaultSubobject<UPhysicsHandleComponent>("MyHandle"); ///Instantiating our PhysicsHandle component and assigning it to the pointer MyHandle
+	MyHandle = CreateDefaultSubobject<UPhysicsHandleComponent>("MyHandle"); ///Instantiating our PhysicsHandle component and assigning it to the pointer MyHandle 
 
 }
 
@@ -48,6 +48,7 @@ void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 	PlayerInputComponent->BindAction(FName("Grab"), IE_Pressed, this, &AMyCharacter::Grab);			///Binding "Fire" input to a function Fire(). "Fire" input is declared in project settings
+	PlayerInputComponent->BindAction(FName("Use"), IE_Pressed, this, &AMyCharacter::Use);
 }
 
 void AMyCharacter::Grab()
@@ -93,5 +94,11 @@ FHitResult AMyCharacter::LineTrace()
 	///DrawDebugLine(GetWorld(), StartLocation, EndLocation, FColor::Red, true, 0.3f, 0, 1.f);			///Another way for visualizing our LineTrace, requires #include "DrawDebugHelpers.h"
 	GetWorld()->LineTraceSingleByObjectType(HitResult, StartLocation, EndLocation, CollisionObjParams, CollisionQueryParams);  ///LineTrace
 	return HitResult;
+}
+
+void AMyCharacter::Use()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Use pressed"));
+	if (!GetWorld()) { return; };
 }
 

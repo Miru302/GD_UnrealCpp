@@ -6,8 +6,9 @@
 #include "GameFramework/Actor.h"
 #include "MyTrigger.generated.h"
 
-class UBoxComponent;
-class UStaticMeshComponent;
+///Creating "EventDispatcher". OneParam can be changed to TwoParams, ThreeParams and so on. 
+///Notice how type and name of parameter are separated by a ','
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FActorTriggeredSignature, AActor*, TouchedActor);
 
 UCLASS()
 class GD_UNREALCPP_API AMyTrigger : public AActor
@@ -15,28 +16,17 @@ class GD_UNREALCPP_API AMyTrigger : public AActor
 	GENERATED_BODY()
 	
 public:	
-	// Sets default values for this actor's properties
+	// Sets default values for this actor's properties 
 	AMyTrigger();
-
-
 protected:
-	// Called when the game starts or when spawned
+
 	virtual void BeginPlay() override;
-
-
-	///Creating pointers to components
-	UPROPERTY(EditDefaultsOnly)
-	UBoxComponent* TriggerVolume;
-
-	UPROPERTY(EditDefaultsOnly)
-	UStaticMeshComponent* MyMesh;
 
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	
-	virtual void NotifyActorBeginOverlap(AActor* OtherActor) override;
-	
-	
+	UPROPERTY(BlueprintAssignable, Category = "EventDispatchers")
+	FActorTriggeredSignature OnTrigger;
+
 };

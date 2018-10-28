@@ -17,7 +17,7 @@ class GD_UNREALCPP_API AMyCharacter : public ACharacter
 
 	float Reach;
 public:
-	// Sets default values for this character's properties
+	// Sets default values for this character's properties 
 	AMyCharacter();
 
 protected:
@@ -37,4 +37,6 @@ public:
 	void Grab();
 	FHitResult LineTrace();
 	
+	void Use();
+
 };
